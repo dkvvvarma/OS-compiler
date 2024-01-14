@@ -1,0 +1,41 @@
+class Page:
+    def __init__(self, pid, pageno):
+        self.pid = pid
+        self.pageno = pageno
+class PageTable:
+    def __init__(self):
+        self.entries = {}
+    def add_entry(self, page):
+        self.entries[(page.pid, page.pageno)] = True
+    def remove_entry(self, page):
+        del self.entries[(page.pid, page.pageno)]
+    def has_entry(self, page):
+        return (page.pid, page.pageno) in self.entries
+class Memory:
+    def __init__(self, size):
+        self.size = size
+        self.pages = []
+    def add_page(self, page):
+        if len(self.pages) >= self.size:
+            self.pages.pop(0)
+        self.pages.append(page)
+    def has_page(self, page):
+        return page in self.pages
+class Process:
+    def __init__(self, pid, pages):
+        self.pid = pid
+        self.pages = pages
+    def run(self, memory):
+        for page in self.pages:
+            if not memory.has_page(page):
+                memory.add_page(page)
+                print(f"Page ({page.pid}, {page.pageno}) added to memory")
+def main():
+    page_table = PageTable()
+    memory = Memory(3)
+    p1 = Process(1, [Page(1, 1), Page(1, 2), Page(1, 3)])
+    p2 = Process(2, [Page(2, 1), Page(2, 2), Page(2, 3)])
+    p1.run(memory)
+    p2.run(memory)
+if __name__ == '__main__':
+    main()

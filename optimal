@@ -1,0 +1,16 @@
+n = int(input("Enter no of pages: "))
+p = list(map(int, input("Enter the reference string: ").split()))
+f = int(input("Enter no of frames: "))
+q = [0] * f
+c = 0
+for i in range(n):
+    if p[i] not in q:
+        c += 1
+        if 0 in q:
+            q[q.index(0)] = p[i]
+        else:
+            idx = [j for j in range(f)]
+            idx = [idx[k] if q[k] not in p[i+1:] else -1 for k in range(f)]
+            q[idx.index(max(idx))] = p[i]
+    print(" ".join(str(x) if x else "-" for x in q))
+print(f"\nThe no of page faults is {c}")

@@ -1,0 +1,13 @@
+def main():
+    proc = int(input("Enter the number of processes: "))
+    bt = [int(input("Enter burst time: ")) for i in range(proc)]
+    art = [int(input("Enter arrival time: ")) for i in range(proc)]
+    at = sum(art)
+    awt = [sum(bt[:i]) for i in range(proc)]
+    tat = (sum(awt) - at) / proc
+    tct = sum([awt[i] + bt[i] for i in range(proc)])
+    avgtct = tct / proc
+    print(f"Average waiting time: {tat:.2f}")
+    print(f"Average completion time: {avgtct:.2f}")
+if __name__ == '__main__':
+    main()

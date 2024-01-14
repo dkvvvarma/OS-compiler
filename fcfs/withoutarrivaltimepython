@@ -1,0 +1,9 @@
+n = int(input("Enter the number of processes: "))
+burst_times = [int(x) for x in input("Enter the burst times separated by spaces: ").split()]
+wait_times = [sum(burst_times[:i]) for i in range(n)]
+avg_wait_time = sum(wait_times) / n
+completion_times = [sum(burst_times[:i+1]) for i in range(n)]
+avg_completion_time = sum(completion_times) / n
+print(f"Average waiting time: {avg_wait_time}")
+print(f"Average completion time: {avg_completion_time}")
+sort = Sanjeev

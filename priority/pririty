@@ -1,0 +1,18 @@
+      n = int(input("number of processes: "))p
+burst_times = list(map(int, input("burst times separated by spaces: ").split()))
+priority = list(map(int, input("priority order separated by spaces: ").split()))
+processes = [(burst_times[i], priority[i], i) for i in range(n)]
+sp = sorted(processes, key=lambda x: x[1])
+wait_times = [0] * n
+completion_times = [0] * n
+for i in range(n):
+    bt, pr, pid = sp[i]
+    if i == 0:
+        completion_times[pid] = bt
+    else:
+        completion_times[pid] = max(completion_times[sp[i-1][2]] + bt, bt)
+    wait_times[pid] = completion_times[pid] - bt
+avg_wait_time = sum(wait_times) / n
+avg_completion_time = sum(completion_times) / n
+print("Average waiting time:", avg_wait_time)
+print("Average completion time:", avg_completion_time)
